@@ -1,0 +1,39 @@
+.dashboard-title {
+    text-align: center;
+  }
+  
+  .metrics {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  
+  .metric-card {
+    background: #f8f8f8;
+    padding: 12px;
+    border-radius: 12px;
+    flex: 0 0 48%;
+    text-align: center;
+  }
+  
+  .metric-title {
+    font-size: 14px;
+    color: gray;
+  }
+  
+  .metric-value {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .expense-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  .expense-list li {
+    padding: 4px 0;
+    font-size: 16px;
+  }
+  

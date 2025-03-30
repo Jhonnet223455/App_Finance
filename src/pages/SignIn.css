@@ -1,0 +1,72 @@
+.sign-in-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 48px;
+  }
+  
+  .subtitle {
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 12px;
+  }
+  
+  .description {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 24px;
+  }
+  
+  .email-input {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .continue-button {
+    background: black;
+    color: white;
+    border-radius: 8px;
+    height: 48px;
+    font-weight: 600;
+  }
+  
+  .divider {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+  }
+  
+  .line {
+    flex-grow: 1;
+    height: 1px;
+    background: #ccc;
+  }
+  
+  .or-text {
+    margin: 0 12px;
+    color: gray;
+  }
+  
+  .provider-button {
+    border-radius: 8px;
+    height: 48px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-transform: none;
+  }
+  
+  .terms {
+    margin-top: 24px;
+    color: gray;
+    font-size: 12px;
+    text-align: center;
+  }
+  
