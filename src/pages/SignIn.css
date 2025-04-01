@@ -1,72 +1,116 @@
 .sign-in-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    text-align: center;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-top: 48px;
-  }
-  
-  .subtitle {
-    font-weight: 600;
-    font-size: 16px;
-    margin-top: 12px;
-  }
-  
-  .description {
-    font-size: 14px;
-    color: gray;
-    margin-bottom: 24px;
-  }
-  
-  .email-input {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 16px;
-  }
-  
-  .continue-button {
-    background: black;
-    color: white;
-    border-radius: 8px;
-    height: 48px;
-    font-weight: 600;
-  }
-  
-  .divider {
-    display: flex;
-    align-items: center;
-    margin: 24px 0;
-  }
-  
-  .line {
-    flex-grow: 1;
-    height: 1px;
-    background: #ccc;
-  }
-  
-  .or-text {
-    margin: 0 12px;
-    color: gray;
-  }
-  
-  .provider-button {
-    border-radius: 8px;
-    height: 48px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    text-transform: none;
-  }
-  
-  .terms {
-    margin-top: 24px;
-    color: gray;
-    font-size: 12px;
-    text-align: center;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  text-align: center;
+  margin : 0 auto; /* Centra horizontalmente */
+  height: 100%;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 48px;
+}
+
+.title1 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-top: 48px;
+}
+
+.subtitle {
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 12px;
+}
+
+.description {
+  font-size: 14px;
+  color: gray;
+  margin-bottom: 24px;
+}
+
+.input-field {
+  border: 1px solid #ccc !important;
+  border-radius: 8px !important;
+  padding: 10px 12px !important;
+  height: 40px !important;
+  font-size: 14px !important;
+  line-height: 18px !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+.password-container {
+  display: flex;
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.password-input {
+  flex: 1;
+  padding-right: 40px !important; /* Espacio para el icono del ojo */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.continue-button {
+  --background: black !important;
+  --color: white !important;
+  --ripple-color: white !important;
+  border-radius: 8px !important;
+  height: 48px !important;
+  font-weight: 600 !important;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.line {
+  flex-grow: 1;
+  height: 1px;
+  background: #ccc;
+}
+
+.or-text {
+  margin: 0 12px;
+  color: gray;
+}
+
+.provider-button {
+  --color: black !important;
+  --border-color: black !important;
+  border-radius: 8px !important;
+  height: 48px !important;
+  font-weight: 600 !important;
+  margin-bottom: 12px !important;
+  text-transform: none !important;
+  margin-top: 20px;
+}
+
+.terms {
+  margin-top: 24px;
+  color: gray;
+  font-size: 12px;
+  text-align: center;
+}
