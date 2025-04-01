@@ -60,11 +60,11 @@ const Dashboard: React.FC = () => {
         <div className="metrics">
           <div className="metric-card">
             <IonText className="metric-title">Amount</IonText>
-            <IonText className="metric-value">$45,678.90</IonText>
+            <IonText className="metric-value"> $45,678.90</IonText>
           </div>
           <div className="metric-card">
             <IonText className="metric-title">Day Expenses</IonText>
-            <IonText className="metric-value">2,405</IonText>
+            <IonText className="metric-value"> 2,405</IonText>
           </div>
         </div>
 

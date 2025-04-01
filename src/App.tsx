@@ -61,10 +61,10 @@ const App: React.FC = () => (
         </IonRouterOutlet>
 
         <IonTabBar slot="bottom">
-          <IonTabButton tab="add-goal" href="/add-goal">
+          {/* <IonTabButton tab="add-goal" href="/add-goal">
             <IonIcon icon={addOutline} />
             <IonLabel>Add</IonLabel>
-          </IonTabButton>
+          </IonTabButton> */}
           <IonTabButton tab="dashboard" href="/dashboard">
             <IonIcon icon={statsChartOutline} />
             <IonLabel>Dashboard</IonLabel>
@@ -73,10 +73,10 @@ const App: React.FC = () => (
             <IonIcon icon={trophyOutline} />
             <IonLabel>Goals</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="signin" href="/signin">
+          {/* <IonTabButton tab="signin" href="/signin">
             <IonIcon icon={personCircleOutline} />
             <IonLabel>Login</IonLabel>
-          </IonTabButton>
+          </IonTabButton> */}
           <IonTabButton tab="activities" href="/activities">
             <IonIcon icon={listOutline} />
             <IonLabel>Activity</IonLabel>
