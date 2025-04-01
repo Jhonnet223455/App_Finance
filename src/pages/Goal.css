@@ -13,6 +13,27 @@
     align-items: flex-start;
     gap: 12px;
   }
+
+
+  .activity-button {
+    --background: black;
+    --color: white;
+    --border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+  }
+  
+  .activity-button:hover {
+    --background: #333;
+  }
+  
+  .activity-button:active {
+    --background: #555;
+  }
+  
   
   .product-img {
     width: 60px;
@@ -27,6 +48,11 @@
     flex-direction: column;
     justify-content: center;
   }
+  .activity-input{
+    width: 100%;
+    font-size: 16px;
+    margin-left: 20px;
+  }
   
   .activity-brand {
     font-size: 12px;
@@ -34,8 +60,8 @@
   }
   
   .activity-name {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 500;
   }
   
   .activity-description {
@@ -43,16 +69,23 @@
     color: #666;
   }
   
+  .activity-text {
+    display: flex;
+    flex-direction: column;
+  }
+  
   .activity-value {
     margin-left: auto;
     font-weight: bold;
     font-size: 16px;
     margin-top: 20px;
+    color: #000;
   }
   
   .form-section {
     border-top: 1px solid #eee;
     padding-top: 20px;
+    display: flex;
   }
   
   .preview-img {
@@ -63,3 +96,33 @@
     border-radius: 8px;
   }
   
+
+  /* Asegurar que los IonInput estén alineados */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espaciado entre los inputs */
+}
+
+.form-section {
+  display: flex;
+  flex-direction:row;
+}
+
+
+
+/* Estilo de tabla para el encabezado */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-weight: bold;
+  padding-top: 30px;
+}
+
+.header-text {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Para asegurar que los elementos del IonList se vean como filas de una tabla */

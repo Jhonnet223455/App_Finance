@@ -63,52 +63,75 @@ const Goal: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent className="ion-padding">
-        <h5 className="activity-title">Goal</h5>
+          <IonContent className="ion-padding">
+            <h5 className="activity-title">Goal</h5>
 
-        <IonList className="activity-list">
-          {products.map((item, index) => (
-            <IonItem lines="none" key={index} className="activity-item">
-              <IonImg src={item.image} className="product-img" />
-              <IonLabel className="activity-label">
-                <IonText className="activity-name">{item.name}</IonText>
-                <IonText className="activity-description">{item.description}</IonText>
-              </IonLabel>
-              <IonText className="activity-value">{item.price}</IonText>
-            </IonItem>
-          ))}
-        </IonList>
+            <div className="">
+              <div className="form-section">
+                <IonText className="activity-label">Name</IonText>
+                <IonInput
+                  className="activity-input"
+                  placeholder="Product name"
+                  value={newProduct.name || ''}
+                  onIonChange={(e) => setNewProduct({ ...newProduct, name: e.detail.value! })}
+                />
+              </div>
 
-        <div className="form-section">
-          <h6>Create Product</h6>
+              <div className="form-section">
+                <IonText className="activity-label">Description</IonText>
+                <IonInput
+                  className="activity-input"
+                  placeholder="Description"
+                  value={newProduct.description || ''}
+                  onIonChange={(e) => setNewProduct({ ...newProduct, description: e.detail.value! })}
+                />
+              </div>
 
-          <IonInput
-            placeholder="Product name"
-            value={newProduct.name || ''}
-            onIonChange={(e) => setNewProduct({ ...newProduct, name: e.detail.value! })}
-          />
-         
-          <IonInput
-            placeholder="Description"
-            value={newProduct.description || ''}
-            onIonChange={(e) => setNewProduct({ ...newProduct, description: e.detail.value! })}
-          />
-          <IonInput
-            type="number"
-            placeholder="Price"
-            value={newProduct.price || ''}
-            onIonChange={(e) => setNewProduct({ ...newProduct, price: `$${e.detail.value}` })}
-          />
+              <div className="form-section">
+                <IonText className="activity-label">Price</IonText>
+                <IonInput
+                  className="activity-input"
+                  type="number"
+                  placeholder="Price"
+                  value={newProduct.price || ''}
+                  onIonChange={(e) => setNewProduct({ ...newProduct, price: `$${e.detail.value}` })}
+                />
+              </div>
+            </div>
 
-          <input type="file" accept="image/*" onChange={handleImageUpload} />
-          {imagePreview && <img src={imagePreview} alt="preview" className="preview-img" />}
+            {/* Encabezado tipo tabla */}
+            <div className="table-header">
+              <IonText className="header-text">PRODUCTS</IonText>
+              <IonText className="header-text">PRICE</IonText>
+            </div>
 
-          <IonButton expand="block" onClick={handleCreate} className="activity-button">
-            Create Goal
-          </IonButton>
-        </div>
-      </IonContent>
-    </IonPage>
+            <IonList className="activity-list">
+              {products.map((item, index) => (
+                <IonItem lines="none" key={index} className="activity-item">
+                  <IonImg src={item.image} className="product-img" />
+                  <IonLabel className="activity-label">
+                    <div className="activity-text">
+                      <IonText className="activity-name">{item.name}</IonText>
+                      <IonText className="activity-description">{item.description}</IonText>
+                    </div>
+                  </IonLabel>
+                  <IonText className="activity-value">{item.price}</IonText>
+                </IonItem>
+              ))}
+            </IonList>
+            
+
+            <div className="form-section">
+              <IonText className="activity-label">Total</IonText>
+              <IonText className="activity-value">$1598</IonText>
+            </div>
+            <IonButton className="activity-button" expand="block" onClick={handleCreate}>
+              Create Goal
+            </IonButton>
+            
+          </IonContent>
+</IonPage>
+
   );
 };
 
