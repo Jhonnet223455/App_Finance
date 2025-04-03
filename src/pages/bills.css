@@ -1,0 +1,54 @@
+.bills-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+    background-color: #f7f9fc; /* Color de fondo suave */
+}
+
+.bills-container h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.bills-container input,
+.bills-container select {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    margin-bottom: 15px;
+}
+
+.bills-container select {
+    cursor: pointer;
+}
+
+.bills-container button {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.bills-container button:hover {
+    background-color: #333;
+}
+
+.bills-container input[type="date"] {
+    color: #333;
+    text-transform: uppercase;
+}

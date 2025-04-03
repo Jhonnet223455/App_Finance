@@ -14,7 +14,10 @@ import {
   IonAvatar,
   IonText
 } from '@ionic/react';
-import { menuOutline } from 'ionicons/icons';
+import { menuOutline, logOutOutline } from 'ionicons/icons';
+import { signOut } from "firebase/auth";
+import { auth } from "../config/firebaseConfig";
+import { useHistory } from "react-router-dom";
 import './Dashboard.css';
 
 import {
@@ -38,6 +41,19 @@ const data = [
 ];
 
 const Dashboard: React.FC = () => {
+  const history = useHistory();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      console.log("User logged out successfully");
+      history.push("/signin");
+    } catch (error) {
+      console.error("Error logging out:", error);
+      alert("Failed to log out");
+    }
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -102,6 +118,15 @@ const Dashboard: React.FC = () => {
             </ul>
           </IonCardContent>
         </IonCard>
+
+        {/* Botón de Logout en la parte inferior izquierda */}
+        <div style={{ position: "absolute", bottom: "20px", left: "20px" }}>
+          <IonButton color="danger" onClick={handleLogout}>
+            <IonIcon icon={logOutOutline} slot="start" />
+            Logout
+          </IonButton>
+        </div>
+
       </IonContent>
     </IonPage>
   );
