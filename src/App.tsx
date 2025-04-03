@@ -21,6 +21,9 @@ import Activities from './pages/Activities';
 import SignIn from './pages/SignIn';
 import Goal from './pages/Goal';
 import Register from './pages/Register';
+import UserProfileSetup from './pages/UserProfileSetup';
+import Bills from './pages/bills';
+import Expenses from './pages/Expenses';
 
 import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';
@@ -43,6 +46,8 @@ const App: React.FC = () => (
         {/* Rutas que no deben tener los tabs */}
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/user-profile-setup" component={UserProfileSetup} />
+
         
         {/* Rutas con tabs */}
         <IonTabs>
@@ -53,6 +58,8 @@ const App: React.FC = () => (
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/activities" component={Activities} />
             <Route exact path="/goal" component={Goal} />
+            <Route exact path="/bills" component={Bills} />
+            <Route exact path="/expenses" component={Expenses} />
             <Route exact path="/">
               <Redirect to="/dashboard" />
             </Route>
@@ -70,6 +77,10 @@ const App: React.FC = () => (
             <IonTabButton tab="activities" href="/activities">
               <IonIcon icon={listOutline} />
               <IonLabel>Activity</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="bills" href="/expenses">
+              <IonIcon icon={listOutline} />
+              <IonLabel>Bills</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
