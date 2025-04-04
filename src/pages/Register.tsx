@@ -8,14 +8,10 @@ import { auth } from '../config/firebaseConfig';
 import { useHistory } from 'react-router-dom';
 import './Register.css';
 
-
-
-
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [email, setEmail] = useState('');
-  const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const history = useHistory(); // Hook para manejar la navegación
@@ -25,18 +21,19 @@ const Register = () => {
       alert("Passwords do not match!");
       return;
     }
-
+  
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log('User registered:', userCredential);
-      alert('Registration successful!');
-      history.push('/signin');
-      // Aquí puedes manejar el redireccionamiento o realizar otras acciones
+      console.log("User registered:", userCredential);
+  
+      alert("Registration successful!");
+      history.push("/user-profile-setup"); // Redirigir a la configuración de perfil
     } catch (error) {
-      console.error('Error registering user:', error);
-      alert('Registration failed! Please try again.');
+      console.error("Error registering user:", error);
+      alert("Registration failed! Please try again.");
     }
   };
+  
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
   const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
@@ -68,13 +65,6 @@ const Register = () => {
           placeholder="email@domain.com"
         ></IonInput>
 
-        <IonInput
-          className="input-field"
-          type="text"
-          value={fullName}
-          onIonChange={(e) => setFullName(e.detail.value!)}
-          placeholder="Full Name"
-        ></IonInput>
 
         <div className="password-container">
           <IonInput
