@@ -58,11 +58,7 @@ const Dashboard: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot="start">
-            <IonButton>
-              <IonIcon icon={menuOutline} />
-            </IonButton>
-          </IonButtons>
+          
           <IonTitle className="dashboard-title">App name</IonTitle>
           <IonButtons slot="end">
             <IonAvatar>

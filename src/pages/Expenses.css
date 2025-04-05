@@ -1,0 +1,13 @@
+.title {
+    font-size: 26px;
+    font-weight: 600; 
+    color: #333; 
+    margin-bottom: 20px; 
+    letter-spacing: 0.5px; 
+    text-transform: capitalize;
+    font-family: 'Arial', sans-serif; 
+    justify-content: center;
+    display: flex;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #c7c6c6;
+  }
