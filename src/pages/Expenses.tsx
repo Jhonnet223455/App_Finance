@@ -4,6 +4,7 @@ import { getFirestore, collection, query, where, getDocs, Timestamp } from "fire
 import { IonFab, IonFabButton, IonIcon,IonContent, IonItem, IonLabel, IonList, IonPage, IonSegment, IonSegmentButton } from "@ionic/react";
 import { add } from "ionicons/icons";
 import { useHistory } from 'react-router-dom';
+import "./Expenses.css"; // Asegúrate de tener este archivo CSS para estilos
 
 // Definir el tipo de gasto
 interface Expense {
