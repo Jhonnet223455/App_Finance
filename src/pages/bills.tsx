@@ -8,7 +8,6 @@ const Bills: React.FC = () => {
   const auth = getAuth();
   const db = getFirestore();
   const user = auth.currentUser;
-  
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Gasto"); // "Gasto" o "Gasto Fijo"
@@ -20,8 +19,6 @@ const Bills: React.FC = () => {
       alert("Usuario no autenticado");
       return;
     }
-
-
     const data = {
       uid: user.uid,
       amount: parseFloat(amount),

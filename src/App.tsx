@@ -10,7 +10,8 @@ import {
   setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-
+// al inicio del archivo
+import AppInitializer from './components/AppInitializer';
 import { statsChartOutline, listOutline, trophyOutline } from 'ionicons/icons';
 
 import AddGoal from './pages/AddGoal';
@@ -41,6 +42,7 @@ setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
+    <AppInitializer>
     <IonReactRouter>
       <IonRouterOutlet>
         {/* Rutas que no deben tener los tabs */}
@@ -86,6 +88,7 @@ const App: React.FC = () => (
         </IonTabs>
       </IonRouterOutlet>
     </IonReactRouter>
+    </AppInitializer>
   </IonApp>
 );
 
