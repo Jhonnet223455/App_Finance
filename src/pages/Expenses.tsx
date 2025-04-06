@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, Timestamp } from "firebase/firestore";
-import { IonFab, IonFabButton, IonIcon,IonContent, IonItem, IonLabel, IonList, IonPage, IonSegment, IonSegmentButton } from "@ionic/react";
+import { IonFab, IonFabButton, IonIcon,IonContent, IonItem, IonLabel, IonList, IonPage, IonSegment, IonSegmentButton, IonButton } from "@ionic/react";
 import { add } from "ionicons/icons";
 import { useHistory } from 'react-router-dom';
 import "./Expenses.css"; // Asegúrate de tener este archivo CSS para estilos
@@ -86,7 +86,7 @@ const Expenses: React.FC = () => {
           </IonSegmentButton>
         </IonSegment>
 
-        <IonList>
+        <IonList style={{ marginBottom: "" }}>
           {expenses.length > 0 ? (
             expenses.map((expense) => (
               <IonItem key={expense.id}>
@@ -104,11 +104,11 @@ const Expenses: React.FC = () => {
             </IonItem>
           )}
         </IonList>
-        <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton color="primary" onClick={() => history.push('/bills')}>
-            <IonIcon icon={add} />
-          </IonFabButton>
-        </IonFab>
+          <div className="fixed-footer">
+            <IonButton className="add-button" expand="block" onClick={() => history.push('/bills')}>
+              New Expense
+            </IonButton>
+          </div>
       </IonContent>
     </IonPage>
   );
