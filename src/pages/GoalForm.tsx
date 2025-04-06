@@ -1,3 +1,5 @@
+// src/pages/GoalForm.tsx
+
 import { useState } from "react";
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
@@ -15,14 +17,24 @@ import {
   IonTitle
 } from "@ionic/react";
 import { useHistory } from 'react-router-dom';
+import { GoalInput } from "../types/goal";
 
-const GoalForm: React.FC = () => {
+interface GoalFormProps {
+  /** Se llama con { name, description, price } (sin uid) */
+  onSubmit?: (goalData: Omit<GoalInput, 'uid'>) => Promise<void>;
+  /** Se llama al cancelar o al cerrar */
+  onCancel?: () => void;
+}
+
+const GoalForm: React.FC<GoalFormProps> = ({ onSubmit, onCancel }) => {
   const auth = getAuth();
   const db = getFirestore();
   const user = auth.currentUser;
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+
   const history = useHistory();
 
   const handleSave = async () => {
@@ -31,28 +43,46 @@ const GoalForm: React.FC = () => {
       return;
     }
 
-    if (!name || !description || !price) {
+    console.log("Guardando meta:", { name, description, price });
+    if (!name && !description && !price) {
       alert("Por favor completa todos los campos.");
       return;
     }
 
-    const goalData = {
-      uid: user.uid,
+    const payload: Omit<GoalInput, 'uid'> = {
       name,
       description,
-      price: parseFloat(price)
+      price: parseFloat(price),
     };
 
     try {
-      await addDoc(collection(db, "metas"), goalData);
+      if (onSubmit) {
+        // Lógica externa (desde el padre)
+        await onSubmit(payload);
+      } else {
+        // Fallback: guardar directo en Firestore
+        await addDoc(collection(db, "metas"), {
+          uid: user.uid,
+          ...payload
+        });
+      }
+
       alert("Meta guardada exitosamente");
       setName("");
       setDescription("");
       setPrice("");
-      history.push("/goal"); // Regresar a la lista de metas
+
+      // Cerrar modal o volver a lista
+      if (onCancel) onCancel();
+      else history.push("/goal");
     } catch (error) {
       console.error("Error al guardar la meta: ", error);
     }
+  };
+
+  const handleCancel = () => {
+    if (onCancel) onCancel();
+    else history.push("/goal");
   };
 
   return (
@@ -60,7 +90,7 @@ const GoalForm: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonButton onClick={() => history.push('/goal')}>
+            <IonButton onClick={handleCancel}>
               Volver
             </IonButton>
           </IonButtons>
@@ -75,19 +105,35 @@ const GoalForm: React.FC = () => {
         <IonList>
           <IonItem>
             <IonLabel position="stacked">Nombre</IonLabel>
-            <IonInput type="text" value={name} onIonChange={(e) => setName(e.detail.value!)} />
+            <IonInput
+              type="text"
+              value={name}
+              onIonInput={e => setName(e.detail.value!)}
+            />
           </IonItem>
           <IonItem>
             <IonLabel position="stacked">Descripción</IonLabel>
-            <IonInput type="text" value={description} onIonChange={(e) => setDescription(e.detail.value!)} />
+            <IonInput
+              type="text"
+              value={description}
+              onIonInput={e => setDescription(e.detail.value!)}
+            />
           </IonItem>
           <IonItem>
             <IonLabel position="stacked">Precio</IonLabel>
-            <IonInput type="number" value={price} onIonChange={(e) => setPrice(e.detail.value!)} />
+            <IonInput
+              type="number"
+              value={price}
+              onIonInput={e => setPrice(e.detail.value!)}
+            />
           </IonItem>
         </IonList>
 
-        <IonButton expand="full" onClick={handleSave} className="continue-button-2">
+        <IonButton
+          expand="full"
+          onClick={handleSave}
+          className="continue-button-2"
+        >
           Guardar
         </IonButton>
       </IonContent>
