@@ -7,12 +7,17 @@ import {
   IonText,
   IonInput,
   IonButton,
-  IonModal
+  IonModal,
+  IonFabButton,
+  IonIcon
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { getFirestore, collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import './Goal.css';
+import GoalForm from './GoalForm';
+import { add } from 'ionicons/icons';
 
 interface Goal {
   name: string;
@@ -25,8 +30,10 @@ const Goal: React.FC = () => {
   const db = getFirestore();
   const [userId, setUserId] = useState<string | null>(null);
   const [goals, setGoals] = useState<Goal[]>([]);
-  const [newGoal, setNewGoal] = useState<Partial<Goal>>({});
+  // Duplicate declaration removed
+  const history = useHistory();
   const [showModal, setShowModal] = useState(false);
+  const [newGoal, setNewGoal] = useState<Partial<Goal>>({});
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -67,15 +74,27 @@ const Goal: React.FC = () => {
     }
   };
 
+
+  const handleNavigate = (e: React.MouseEvent<HTMLIonButtonElement>) => {
+    (e.target as HTMLElement).blur();
+    history.push('/GoalForm');
+  };
+  
   const total = goals.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <IonPage>
       <IonContent className="ion-padding">
-        <h5 className="activity-title">Goals</h5>
+        
+         <div className="fixed-footer">
+          <h5 className="activity-title">Goals</h5>
+          <div className="fixed-total" style={{ marginBottom:"10px", display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "1px solid #c7c6c6" }}>
+            <IonText className="activity-label">Total</IonText>
+            <IonText className="activity-value" style={{ marginTop: '0px' }}>${total}</IonText>
+          </div>
 
-        <IonList className="activity-list">
-          {goals.map((item, index) => (
+          <IonList className="activity-list">
+            {goals.map((item, index) => (
             <IonItem lines="none" key={index} className="activity-item">
               <IonLabel className="activity-label">
                 <div className="activity-text">
@@ -87,61 +106,16 @@ const Goal: React.FC = () => {
             </IonItem>
           ))}
         </IonList>
+        </div>  
 
-        <div className="fixed-footer">
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <IonText className="activity-label">Total</IonText>
-            <IonText className="activity-value" style={{ marginTop: '0px' }}>${total}</IonText>
-          </div>
-
-          <IonButton className="activity-button" expand="block" onClick={() => setShowModal(true)}>
-            New Goal
+        <IonFabButton className="floating-button">
+          <IonButton className="activity-button"   onClick={handleNavigate}>
+            <IonIcon icon={add} />
           </IonButton>
-        </div>
+        </IonFabButton>
 
-        <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
-          <div className="activity-card" style={{ padding: '20px' }}>
-            <div className="form-section">
-              <IonText className="activity-label">Name</IonText>
-              <IonInput
-                className="activity-input"
-                placeholder="Add goal name"
-                value={newGoal.name || ''}
-                onIonChange={(e) => setNewGoal({ ...newGoal, name: e.detail.value! })}
-              />
-            </div>
 
-            <div className="form-section">
-              <IonText className="activity-label">Description</IonText>
-              <IonInput
-                className="activity-input"
-                placeholder="Add goal description"
-                value={newGoal.description || ''}
-                onIonChange={(e) => setNewGoal({ ...newGoal, description: e.detail.value! })}
-              />
-            </div>
 
-            <div className="form-section">
-              <IonText className="activity-label">Price</IonText>
-              <IonInput
-                className="activity-input"
-                type="number"
-                placeholder="$0.00"
-                value={newGoal.price || ''}
-                onIonChange={(e) => setNewGoal({ ...newGoal, price: Number(e.detail.value) })}
-              />
-            </div>
-
-            <div style={{ marginTop: '20px' }}>
-              <IonButton className="activity-button" expand="block" onClick={handleCreate}>
-                Save Goal
-              </IonButton>
-              <IonButton className="activity-button" expand="block" color="medium" onClick={() => setShowModal(false)}>
-                Cancel
-              </IonButton>
-            </div>
-          </div>
-        </IonModal>
       </IonContent>
     </IonPage>
   );

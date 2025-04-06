@@ -1,19 +1,4 @@
-import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonIcon,
-  IonButtons,
-  IonButton,
-  IonAvatar,
-  IonText
-} from '@ionic/react';
+import {IonPage, IonHeader,IonToolbar, IonTitle,IonContent,IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonIcon,IonButtons,IonButton,IonAvatar,IonText} from '@ionic/react';
 import { menuOutline, logOutOutline } from 'ionicons/icons';
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
@@ -56,23 +41,15 @@ const Dashboard: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonButton>
-              <IonIcon icon={menuOutline} />
-            </IonButton>
-          </IonButtons>
-          <IonTitle className="dashboard-title">App name</IonTitle>
-          <IonButtons slot="end">
-            <IonAvatar>
+      <IonContent className="ion-padding">
+      <div>
+        <h5 className="dashboard-title">App name</h5>
+          <IonButtons className="profile-avatar">
+            <IonAvatar onClick={() => history.push('/user-config')} style={{ cursor: 'pointer' }}>
               <img src="/public/profile.jpg" alt="Profile" />
             </IonAvatar>
           </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-
-      <IonContent className="ion-padding">
+          
         <div className="metrics">
           <div className="metric-card">
             <IonText className="metric-title">Amount</IonText>
@@ -119,13 +96,8 @@ const Dashboard: React.FC = () => {
           </IonCardContent>
         </IonCard>
 
-        {/* Botón de Logout en la parte inferior izquierda */}
-        <div style={{ position: "absolute", bottom: "20px", left: "20px" }}>
-          <IonButton color="danger" onClick={handleLogout}>
-            <IonIcon icon={logOutOutline} slot="start" />
-            Logout
-          </IonButton>
         </div>
+
 
       </IonContent>
     </IonPage>

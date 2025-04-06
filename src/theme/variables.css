@@ -1,2 +1,26 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+ion-tab-bar {
+    --background: white; /* o el color de fondo que prefieras */
+    --color: black;
+    --color-selected: black;
+    height: 80px; /* aumenta la altura del tab bar */
+    padding-bottom: 10px; /* espacio inferior extra para los botones */
+  }
+  
+  ion-tab-button {
+    --color: black;
+    --color-selected: black;
+    font-size: 16px;
+  }
+  
+  ion-tab-button ion-icon {
+    font-size: 28px; /* tamaño más grande para el ícono */
+  }
+  
+  ion-tab-button ion-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+  
