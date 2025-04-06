@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, query, where, getDocs, Timestamp } from "firebase/firestore";
-import { IonFab, IonFabButton, IonIcon,IonContent, IonItem, IonLabel, IonList, IonPage, IonSegment, IonSegmentButton, IonButton } from "@ionic/react";
+import { IonFab, IonFabButton, IonIcon,IonContent, IonItem, IonLabel, IonList, IonPage, IonSegment, IonSegmentButton, IonButton, IonText } from "@ionic/react";
 import { add } from "ionicons/icons";
 import { useHistory } from 'react-router-dom';
 import "./Expenses.css"; // Asegúrate de tener este archivo CSS para estilos
@@ -23,6 +23,7 @@ const Expenses: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [category, setCategory] = useState<"gastos" | "gastos_fijos">("gastos");
   const history = useHistory(); 
+  const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
 
   useEffect(() => {
     // Esperar a que Firebase cargue el usuario
@@ -74,41 +75,49 @@ const Expenses: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent>
-        <h2 className="title">Mis Gastos</h2>
+      <IonContent className="ion-padding">
+        <div className="fixed-footer">
+          <h5 className="activity-title">Bills</h5>
 
-        <IonSegment value={category} onIonChange={(e) => setCategory(e.detail.value as "gastos" | "gastos_fijos")}>
-          <IonSegmentButton value="gastos">
-            <IonLabel>Gastos</IonLabel>
-          </IonSegmentButton>
-          <IonSegmentButton value="gastos_fijos">
-            <IonLabel>Gastos Fijos</IonLabel>
-          </IonSegmentButton>
-        </IonSegment>
+          <IonSegment value={category} onIonChange={(e) => setCategory(e.detail.value as any)} style={{ marginBottom: "10px" }}>
+            <IonSegmentButton value="gastos">
+              <IonLabel style={{ fontSize: "15px" }}>Occasional Bills</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton value="gastos_fijos">
+              <IonLabel style={{ fontSize: "15px" }}>Monthly</IonLabel>
+            </IonSegmentButton>
+          </IonSegment>
 
-        <IonList style={{ marginBottom: "" }}>
-          {expenses.length > 0 ? (
-            expenses.map((expense) => (
-              <IonItem key={expense.id}>
-                <IonLabel>
-                  <h2>{expense.description}</h2>
-                  <p>${expense.amount.toFixed(2)}</p>
-                  <p>{expense.timestamp.toLocaleString()}</p>
-                  {category === "gastos_fijos" && expense.recurrence && <p>Recurrencia: {expense.recurrence}</p>}
-                </IonLabel>
+      
+          <IonList className="activity-list">
+            {expenses.length > 0 ? (
+              expenses.map((item) => (
+                <IonItem lines="none" key={item.id} className="activity-item">
+                  <IonLabel className="activity-label">
+                    <div className="activity-text">
+                      <IonText className="activity-name">{item.description}</IonText>
+                      <IonText className="activity-description">{item.timestamp.toLocaleString()}</IonText>
+                      {category === "gastos_fijos" && item.recurrence && (
+                        <IonText className="activity-description">Recurrencia: {item.recurrence}</IonText>
+                      )}
+                    </div>
+                  </IonLabel>
+                  <IonText className="activity-value">${item.amount.toFixed(2)}</IonText>
+                </IonItem>
+              ))
+            ) : (
+              <IonItem lines="none" className="activity-item">
+                <IonLabel>No hay {category === "gastos" ? "gastos" : "gastos fijos"} registrados.</IonLabel>
               </IonItem>
-            ))
-          ) : (
-            <IonItem>
-              <IonLabel>No hay {category === "gastos" ? "gastos" : "gastos fijos"} registrados.</IonLabel>
-            </IonItem>
-          )}
-        </IonList>
-          <div className="fixed-footer">
-            <IonButton className="add-button" expand="block" onClick={() => history.push('/bills')}>
-              New Expense
-            </IonButton>
-          </div>
+            )}
+          </IonList>
+        </div>
+
+        <IonFabButton className="floating-button">
+          <IonButton className="activity-button" onClick={() => history.push('/bills')}>
+            <IonIcon icon={add} />
+          </IonButton>
+        </IonFabButton>
       </IonContent>
     </IonPage>
   );

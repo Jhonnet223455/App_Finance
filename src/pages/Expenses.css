@@ -20,15 +20,13 @@
     font-weight: bold;
     padding: 12px;
     text-transform: uppercase;
-
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   }
   
-
-  .fixed-footer {
-    position: sticky;
-    bottom: 0;
-    background-color: white;
-    padding: 16px;
-    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 10; /* Asegura que esté sobre otros elementos */
+  .floating-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100; /* para que quede arriba de todo */
   }
+  

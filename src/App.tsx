@@ -14,15 +14,14 @@ import { IonReactRouter } from '@ionic/react-router';
 import AppInitializer from './components/AppInitializer';
 import { statsChartOutline, listOutline, trophyOutline } from 'ionicons/icons';
 
-import AddGoal from './pages/AddGoal';
-import Notification from './pages/Notification';
+
 import GoalForm from './pages/GoalForm';
 import Dashboard from './pages/Dashboard';
-import Activities from './pages/Activities';
 import SignIn from './pages/SignIn';
 import Goal from './pages/Goal';
 import Register from './pages/Register';
 import UserProfileSetup from './pages/UserProfileSetup';
+import UserConfig from './pages/UserConfig';
 import Bills from './pages/bills';
 import Expenses from './pages/Expenses';
 
@@ -54,14 +53,13 @@ const App: React.FC = () => (
         {/* Rutas con tabs */}
         <IonTabs>
           <IonRouterOutlet>
-            <Route exact path="/add-goal" component={AddGoal} />
-            <Route exact path="/notification" component={Notification} />
-            <Route exact path="/goal-form" component={GoalForm} />
+          <Route path="/user-config" component={UserConfig} exact />
             <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/activities" component={Activities} />
             <Route exact path="/goal" component={Goal} />
             <Route exact path="/bills" component={Bills} />
             <Route exact path="/expenses" component={Expenses} />
+            <Route exact path="/GoalForm" component={GoalForm} /> 
+
             <Route exact path="/">
               <Redirect to="/dashboard" />
             </Route>

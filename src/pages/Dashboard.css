@@ -1,16 +1,25 @@
 .dashboard-title {
-    text-align: center;
     font-size: 26px;
     font-weight: 600; 
-    color: #333; 
+    color: #000000; 
     margin-bottom: 20px; 
     letter-spacing: 0.5px; 
     text-transform: capitalize;
     font-family: 'Arial', sans-serif; 
+    justify-content: center;
     display: flex;
     padding-bottom: 10px;
-    padding-top : 20px;
-    padding-left: 80px ;
+    border-bottom: 1px solid #c7c6c6;
+    z-index: 1;
+   
+    margin-bottom: 20px;
+  }
+
+  .profile-avatar {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
   }
   
   .metrics {
