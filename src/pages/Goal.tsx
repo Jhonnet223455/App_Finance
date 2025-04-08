@@ -97,7 +97,7 @@ const Goal: React.FC = () => {
             }}
           >
             <IonText className="activity-label">Total</IonText>
-            <IonText className="activity-value">${total}</IonText>
+            <IonText className="activity-value" style={{marginTop:"0px"}}>${total}</IonText>
           </div>
 
           <IonList className="activity-list">
@@ -129,7 +129,7 @@ const Goal: React.FC = () => {
         </div>
         {/* Floating button */}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton onClick={() => setShowModal(true)}>
+          <IonFabButton className='activity-button' onClick={() => setShowModal(true)}>
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>

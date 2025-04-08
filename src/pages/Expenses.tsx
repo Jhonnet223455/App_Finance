@@ -127,7 +127,7 @@ const Expenses: React.FC = () => {
         </div>
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton onClick={() => history.push("/bills")}>
+          <IonFabButton className="activity-button" onClick={() => history.push("/bills")}>
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>
