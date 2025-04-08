@@ -127,7 +127,6 @@ const Goal: React.FC = () => {
           )}
 
         </div>
-
         {/* Floating button */}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton onClick={() => setShowModal(true)}>
@@ -141,7 +140,6 @@ const Goal: React.FC = () => {
             onSubmit={handleCreate}
             onCancel={() => setShowModal(false)}
           />
-
         </IonModal>
       </IonContent>
     </IonPage>
