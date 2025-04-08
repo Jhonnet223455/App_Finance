@@ -1,111 +1,133 @@
+// src/pages/Expenses.tsx
+
 import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, collection, query, where, getDocs, Timestamp } from "firebase/firestore";
-import { IonFab, IonFabButton, IonIcon,IonContent, IonItem, IonLabel, IonList, IonPage, IonSegment, IonSegmentButton } from "@ionic/react";
+import {
+  IonPage,
+  IonContent,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonText,
+  IonSegment,
+  IonSegmentButton,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  useIonViewWillEnter,
+} from "@ionic/react";
 import { add } from "ionicons/icons";
-import { useHistory } from 'react-router-dom';
-import "./Expenses.css"; // Asegúrate de tener este archivo CSS para estilos
+import { useHistory } from "react-router-dom";
 
-// Definir el tipo de gasto
-interface Expense {
-  id: string;
-  amount: number;
-  description: string;
-  timestamp: Date;
-  recurrence?: string; // Solo para "gastos_fijos"
-}
+import { getExpensesByUser } from "../services/expenseService";
+import { getFixedExpensesByUser } from "../services/fixedExpensesService";
+import { Expense } from "../types/expense";
+import "./Expenses.css";
 
 const Expenses: React.FC = () => {
   const auth = getAuth();
-  const db = getFirestore();
+  const history = useHistory();
 
   const [userId, setUserId] = useState<string | null>(null);
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [category, setCategory] = useState<"gastos" | "gastos_fijos">("gastos");
-  const history = useHistory(); 
 
+  // 1️⃣ Detectar usuario
   useEffect(() => {
-    // Esperar a que Firebase cargue el usuario
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserId(user.uid);
-      }
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) setUserId(user.uid);
     });
-    return () => unsubscribe();
+    return () => unsub();
   }, [auth]);
 
-  useEffect(() => {
+  // 2️⃣ Cuando tengamos UID, cargar todos los gastos
+  useIonViewWillEnter(() => {
     if (userId) fetchExpenses();
-  }, [category, userId]);
+  }, [userId]);
 
   const fetchExpenses = async () => {
     if (!userId) return;
-
-    const expensesCollection = collection(db, category);
-    const q = query(expensesCollection, where("uid", "==", userId));
-
     try {
-      const snapshot = await getDocs(q);
-      if (snapshot.empty) {
-        console.log("No hay datos en la colección", category);
-        setExpenses([]);
-        return;
-      }
-
-      const data: Expense[] = snapshot.docs.map((doc) => {
-        const docData = doc.data();
-        console.log("Documento obtenido:", docData); // Depuración
-
-        return {
-          id: doc.id,
-          amount: docData.amount || 0,
-          description: docData.description || "Sin descripción",
-          timestamp: docData.timestamp ? (docData.timestamp as Timestamp).toDate() : new Date(),
-          recurrence: docData.recurrence || "",
-        };
-      });
-
-      console.log("Gastos obtenidos:", data);
-      setExpenses(data);
-    } catch (error) {
-      console.error("Error al obtener gastos:", error);
+      const [ocasionales, fijos] = await Promise.all([
+        getExpensesByUser(userId),
+        getFixedExpensesByUser(userId),
+      ]);
+      setExpenses([...ocasionales, ...fijos]);
+    } catch (err) {
+      console.error("Error cargando gastos:", err);
     }
   };
+  
+
+  // 3️⃣ Filtrar por categoría: 
+  //    - "gastos": sin recurrence
+  //    - "gastos_fijos": con recurrence
+  const displayed = expenses.filter(e =>
+    category === "gastos" ? !e.recurrence : !!e.recurrence
+  );
+
+  const total = displayed.reduce((sum, e) => sum + e.amount, 0);
 
   return (
     <IonPage>
-      <IonContent>
-        <h2 className="title">Mis Gastos</h2>
+      <IonContent className="ion-padding">
+        <div className="fixed-footer">
+          <h5 className="activity-title">Bills</h5>
 
-        <IonSegment value={category} onIonChange={(e) => setCategory(e.detail.value as "gastos" | "gastos_fijos")}>
-          <IonSegmentButton value="gastos">
-            <IonLabel>Gastos</IonLabel>
-          </IonSegmentButton>
-          <IonSegmentButton value="gastos_fijos">
-            <IonLabel>Gastos Fijos</IonLabel>
-          </IonSegmentButton>
-        </IonSegment>
+          <IonSegment
+            value={category}
+            onIonChange={e => setCategory(e.detail.value as any)}
+            style={{ marginBottom: "10px" }}
+          >
+            <IonSegmentButton value="gastos">
+              <IonLabel style={{ fontSize: "15px" }}>Occasional Bills</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton value="gastos_fijos">
+              <IonLabel style={{ fontSize: "15px" }}>Monthly</IonLabel>
+            </IonSegmentButton>
+          </IonSegment>
 
-        <IonList>
-          {expenses.length > 0 ? (
-            expenses.map((expense) => (
-              <IonItem key={expense.id}>
+          <IonList className="activity-list">
+            {displayed.length > 0 ? (
+              displayed.map(item => (
+                <IonItem
+                  lines="none"
+                  key={item.id}
+                  className="activity-item"
+                >
+                  <IonLabel className="activity-label">
+                    <div className="activity-text">
+                      <IonText className="activity-name">
+                        {item.description}
+                      </IonText>
+                      <IonText className="activity-description">
+                        {new Date(item.timestamp!).toLocaleString()}
+                      </IonText>
+                      {category === "gastos_fijos" && (
+                        <IonText className="activity-description">
+                          Recurrence: {item.recurrence}
+                        </IonText>
+                      )}
+                    </div>
+                  </IonLabel>
+                  <IonText className="activity-value">
+                    ${item.amount.toFixed(2)}
+                  </IonText>
+                </IonItem>
+              ))
+            ) : (
+              <IonItem lines="none" className="activity-item">
                 <IonLabel>
-                  <h2>{expense.description}</h2>
-                  <p>${expense.amount.toFixed(2)}</p>
-                  <p>{expense.timestamp.toLocaleString()}</p>
-                  {category === "gastos_fijos" && expense.recurrence && <p>Recurrencia: {expense.recurrence}</p>}
+                  No hay{" "}
+                  {category === "gastos" ? "gastos" : "gastos fijos"} registrados.
                 </IonLabel>
               </IonItem>
-            ))
-          ) : (
-            <IonItem>
-              <IonLabel>No hay {category === "gastos" ? "gastos" : "gastos fijos"} registrados.</IonLabel>
-            </IonItem>
-          )}
-        </IonList>
+            )}
+          </IonList>
+        </div>
+
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton color="primary" onClick={() => history.push('/bills')}>
+          <IonFabButton onClick={() => history.push("/bills")}>
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>
